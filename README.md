@@ -19,7 +19,7 @@ If you want watch resultat of my work you can click on the link below or link on
 - VanillaJS - I constantly learn JavaScript with Traversky Media course and tasks which he gives after episode
 - Boostrap - I'm happy that I efficiently use Bootstrap for creating UI
 
-## My mistacke
+## My mistake
 
 I MADE ONLY ONE COMMIT - bad luck
 
