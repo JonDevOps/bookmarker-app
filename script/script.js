@@ -17,11 +17,13 @@ const saveBookMark = (e) => {
     e.preventDefault()
     const siteName = document.getElementById('siteName').value
     const siteUrl = document.getElementById('siteURL').value
+    const countOfStars = document.querySelector('input[type="radio"]:checked').value
 
     if (validateForm(siteUrl)) {
         const bookmark = {
             name: siteName,
-            url: siteUrl
+            url: siteUrl,
+            stars: countOfStars
         }
         if (localStorage.getItem('bookmarks') === null) {
             const bookmarks = []
@@ -48,6 +50,20 @@ const deleteBookmark = (url) => {
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks))
     fetchBookmarks()
 }
+const generateStars = (countOfStars) => {
+    if (countOfStars == 1) return       `<div>
+                                            <i class="fas fa-star"></i>
+                                        </div>`
+    else if (countOfStars == 2) return `<div>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>`
+    else if(countOfStars == 3) return `<div>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>`
+}
 const fetchBookmarks = () => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks'))
     const bookmarksResults = document.getElementById('bookmarksResults')
@@ -56,7 +72,10 @@ const fetchBookmarks = () => {
     for (let i = 0; i < bookmarks.length; i++) {
         const name = bookmarks[i].name
         const url = bookmarks[i].url
-        bookmarksResults.innerHTML += `<div class="card  border-light  mb-3 mx-1 card-height" style="max-width: 18rem;">
+        const stars = bookmarks[i].stars
+        const sineStars = generateStars(stars)
+
+        bookmarksResults.innerHTML += `<div class="card  border-light  mb-3 mx-1 card-height card-shadow" style="max-width: 18rem;">
                                         <div class="card-header">${name}</div>
                                         <div class="card-body row justify-content-center">
                                        
@@ -68,8 +87,11 @@ const fetchBookmarks = () => {
                                             </a>
                                           
                                             </div>
-                                            </div>
-                                            `
+                                            <div class="card-footer text-muted text-center">
+                                                ${sineStars}
+                                            </div >
+                                            </div >
+    `
     }
 }
 window.addEventListener('load', fetchBookmarks)
