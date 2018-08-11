@@ -13,6 +13,9 @@ const validateForm = (siteUrl) => {
     }
     return true
 }
+const setMaxValueOfRange = (lengthOfBookmarks) => {
+    document.querySelector(`span[name="maxValue"]`).textContent = lengthOfBookmarks
+}
 const saveBookMark = (e) => {
     e.preventDefault()
     const siteName = document.getElementById('siteName').value
@@ -64,13 +67,18 @@ const generateStars = (countOfStars) => {
                                             <i class="fas fa-star"></i>
                                         </div>`
 }
-const filterResults = (bookmark) => {
+const filterResultsByPhrase = (name) => {
     const phrase = document.querySelector(`#searchingPhrase`).value
    
-    if(bookmark.name.toLowerCase().indexOf(phrase.toLowerCase())  && bookmark.name.toLowerCase() != ''){
+    if(name.toLowerCase().indexOf(phrase.toLowerCase())  && name.toLowerCase() != ''){
         return false
     }
     else return true
+}
+const filterResultsByCountOfStars = (countOfStar) => {
+   const countOfStarForFilter =  document.querySelector('input[name="searchByStar"]:checked').value
+   if(countOfStarForFilter == countOfStar || countOfStarForFilter == 4) return true
+   else return false
 }
 const fetchBookmarks = () => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) //DANE
@@ -78,7 +86,7 @@ const fetchBookmarks = () => {
     bookmarksResults.innerHTML = ''
 
     for (let i = 0; i < bookmarks.length; i++) {
-        if(filterResults(bookmarks[i])){
+        if(filterResultsByPhrase(bookmarks[i].name) && filterResultsByCountOfStars(bookmarks[i].stars) ){
 
             const name = bookmarks[i].name
             const url = bookmarks[i].url
@@ -104,6 +112,7 @@ const fetchBookmarks = () => {
                                                 </div >
                                                 </div >
         `
+        setMaxValueOfRange(bookmarks.length)
         }else console.log('nie pasi')
         
     }
@@ -112,6 +121,6 @@ window.addEventListener('load', fetchBookmarks)
 //Listen for submit
 document.querySelector('#myForm').addEventListener('submit', saveBookMark)
 document.querySelector('#searchingPhrase').addEventListener('input', fetchBookmarks)
-const createModal = () => {
-
-}
+document.querySelectorAll(`input[name="searchByStar"]`).forEach((el)=>{
+    el.addEventListener('input', fetchBookmarks)
+})
