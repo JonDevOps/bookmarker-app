@@ -64,40 +64,54 @@ const generateStars = (countOfStars) => {
                                             <i class="fas fa-star"></i>
                                         </div>`
 }
+const filterResults = (bookmark) => {
+    const phrase = document.querySelector(`#searchingPhrase`).value
+   
+    if(bookmark.name.toLowerCase().indexOf(phrase.toLowerCase())  && bookmark.name.toLowerCase() != ''){
+        return false
+    }
+    else return true
+}
 const fetchBookmarks = () => {
-    const bookmarks = JSON.parse(localStorage.getItem('bookmarks'))
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) //DANE
     const bookmarksResults = document.getElementById('bookmarksResults')
     bookmarksResults.innerHTML = ''
 
     for (let i = 0; i < bookmarks.length; i++) {
-        const name = bookmarks[i].name
-        const url = bookmarks[i].url
-        const stars = bookmarks[i].stars
-        const sineStars = generateStars(stars)
+        if(filterResults(bookmarks[i])){
 
-        bookmarksResults.innerHTML += `<div class="card  border-light  mb-3 mx-1 card-height card-shadow" style="max-width: 18rem;">
-                                        <div class="card-header">${name}</div>
-                                        <div class="card-body row justify-content-center">
-                                       
-                                            <a class="btn btn-success btn-sm m-1 w-75" target="_blank" href="${url}">
-                                                Visits
-                                            </a>
-                                            <a onclick="deleteBookmark('${url}')" class="btn btn-danger btn-sm m-1 w-75" href="#">
-                                                Delete
-                                            </a>
-                                          
-                                            </div>
-                                            <div class="card-footer text-muted text-center">
-                                                ${sineStars}
-                                            </div >
-                                            </div >
-    `
+            const name = bookmarks[i].name
+            const url = bookmarks[i].url
+            const stars = bookmarks[i].stars
+            const sineStars = generateStars(stars)
+    
+            
+    
+            bookmarksResults.innerHTML += `<div class="card  border-light  mb-3 mx-1 card-height card-shadow" style="max-width: 18rem;">
+                                            <div class="card-header">${name}</div>
+                                            <div class="card-body row justify-content-center">
+                                           
+                                                <a class="btn btn-success btn-sm m-1 w-75" target="_blank" href="${url}">
+                                                    Visits
+                                                </a>
+                                                <a onclick="deleteBookmark('${url}')" class="btn btn-danger btn-sm m-1 w-75" href="#">
+                                                    Delete
+                                                </a>
+                                              
+                                                </div>
+                                                <div class="card-footer text-muted text-center">
+                                                    ${sineStars}
+                                                </div >
+                                                </div >
+        `
+        }else console.log('nie pasi')
+        
     }
 }
 window.addEventListener('load', fetchBookmarks)
 //Listen for submit
 document.querySelector('#myForm').addEventListener('submit', saveBookMark)
-
+document.querySelector('#searchingPhrase').addEventListener('input', fetchBookmarks)
 const createModal = () => {
 
 }
