@@ -31,4 +31,4 @@ I MADE ONLY ONE COMMIT - bad luck
 
 - improve RWD
 - use more bootstrap's grid system
-- additional functionality: rating system, history storage, filterable
+- additional functionality: rating system, history storage, filterable, modal with warning before use app (local-storage)

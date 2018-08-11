@@ -14,7 +14,12 @@ const validateForm = (siteUrl) => {
     return true
 }
 const setMaxValueOfRange = (lengthOfBookmarks) => {
-    document.querySelector(`span[name="maxValue"]`).textContent = lengthOfBookmarks
+    const rangeIndicatorSpan = document.querySelector(`span[name="maxValue"]`)
+    const rangeIndicator = document.querySelector(`input[type="range"]`)
+    rangeIndicatorSpan.textContent = lengthOfBookmarks
+    rangeIndicator.setAttribute("max",`${lengthOfBookmarks}`)
+    console.log(lengthOfBookmarks)
+
 }
 const saveBookMark = (e) => {
     e.preventDefault()
@@ -83,9 +88,12 @@ const filterResultsByCountOfStars = (countOfStar) => {
 const fetchBookmarks = () => {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) //DANE
     const bookmarksResults = document.getElementById('bookmarksResults')
+    const valueOfRangeSlider = document.querySelector(`#formControlRange`).value
+    
     bookmarksResults.innerHTML = ''
+    
 
-    for (let i = 0; i < bookmarks.length; i++) {
+    for (let i = 0; i < valueOfRangeSlider; i++) {
         if(filterResultsByPhrase(bookmarks[i].name) && filterResultsByCountOfStars(bookmarks[i].stars) ){
 
             const name = bookmarks[i].name
@@ -124,3 +132,4 @@ document.querySelector('#searchingPhrase').addEventListener('input', fetchBookma
 document.querySelectorAll(`input[name="searchByStar"]`).forEach((el)=>{
     el.addEventListener('input', fetchBookmarks)
 })
+document.querySelector(`#formControlRange`).addEventListener('input', fetchBookmarks)
