@@ -24,6 +24,14 @@ h1{
 .fas{
     color: gold;
 }
+.sort{
+    padding: 10px;
+    color: rgb(48, 140, 226);
+    border: solid 2px gold;
+    border-radius: 8px;
+    background-color: rgba(219, 216, 17, 0.356)
+
+}
 .jumbotron{
     width: 100%;
 }

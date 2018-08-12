@@ -110,9 +110,9 @@ const fetchBookmarks = () => {
                                                 <a class="btn btn-success btn-sm m-1 w-75" target="_blank" href="${url}">
                                                     Visits
                                                 </a>
-                                                <a onclick="deleteBookmark('${url}')" class="btn btn-danger btn-sm m-1 w-75" href="#">
+                                                <button onclick="deleteBookmark('${url}')" class="btn btn-danger btn-sm m-1 w-75" href="#">
                                                     Delete
-                                                </a>
+                                                </button>
                                               
                                                 </div>
                                                 <div class="card-footer text-muted text-center">
